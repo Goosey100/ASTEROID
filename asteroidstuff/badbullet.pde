@@ -17,14 +17,15 @@ vel = new PVector(myShip.loc.x- x,myShip.loc.y-y);
   void show() {
   
   
-
+/*
         if (dist(loc.x, loc.y, myShip.loc.x, myShip.loc.y) <=size/2 + myShip.size) {
       if (myShip.immune == false) {
-        myShip.lives--;
+        myShip.lives --;
         myShip.immune = true; 
         lives--;
       }
         }
+        */
     
     stroke(255);
  

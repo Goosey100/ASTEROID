@@ -10,7 +10,7 @@ class Ship extends GameObject {
   int counter;
   int pointscreen;
 
-
+int lifechecker;
   boolean teleport;
 
   //2. CONSTRUCTOR(S)
@@ -30,6 +30,7 @@ class Ship extends GameObject {
     teleport = false;
     teletimer = 0;
     tkey= false;
+//    lifechecker=lives;
     
   }
 
@@ -38,13 +39,21 @@ class Ship extends GameObject {
 
 
   void act() {
+        super.act();
+    
+    if (myShip.lives== 0) {
+mode = GAMEOVER;
+        
+      } 
 
-    super.act();
+    
+             
+
+
+
+
 
     //immunity
-
-if (mode == GAMEOVER){
-  myShip.lives = 4;}
 
 
     if (myShip.immune) {
@@ -62,13 +71,9 @@ if (mode == GAMEOVER){
         if (myObj instanceof badbullet) {
           if ( dist(loc.x, loc.y, myObj.loc.x, myObj.loc.y) < size/2 + myObj.size) {   
 
-
-      myShip.lives = myShip.lives - 1; 
-
-            if (myShip.lives <= 1) {
-              mode = GAMEOVER;
-
-            } 
+    myShip.lives--;
+    immune = true;
+        
             myObjects.add(new particle(loc.x, loc.y));
             myObjects.add(new particle(loc.x, loc.y));
             myObjects.add(new particle(loc.x, loc.y));
@@ -96,7 +101,6 @@ if (mode == GAMEOVER){
       vel.add(direct);
       myObjects.add(new fire());
       myObjects.add(new fire());
-      //myObjects.add(new obj());
     }
     if (downkey) {
 
@@ -129,17 +133,17 @@ if (mode == GAMEOVER){
 
 
 
-    text ("counter" + counter, 50, 200);
+  //  text ("counter" + counter, 50, 200);
 
 
 
-    if (tkey = true 
-      && teletimer >= 60
+    if (tkey = true &&mode == GAME
+     // && teletimer >= 60
       ) {
-      do { 
+     // do { 
         randomshipx=(int)random(800);
         randomshipy=(int)random(600);
-      } while  (randomshipx>= dist(loc.x, loc.y, myShip.loc.x, myShip.loc.y) && randomshipy>= dist(loc.x, loc.y, myShip.loc.x, myShip.loc.y));
+      //} while  (randomshipx>= dist(loc.x, loc.y, myShip.loc.x, myShip.loc.y) && randomshipy>= dist(loc.x, loc.y, myShip.loc.x, myShip.loc.y));
     }
 
 
@@ -148,18 +152,17 @@ if (mode == GAMEOVER){
 
 
 
-    int i = 0;
+    //int i = 0;
 
 
 
 
-pointscreen = lives -1;
 
 
 
 
 fill(255);
-   text( "ATTEMPTS: " + pointscreen, 80, 50);
+   text( "LIVES: " + myShip.lives, 80, 50);
     text( "SCORE " + points, 80, 100);
     pushMatrix();
     translate(loc.x, loc.y);

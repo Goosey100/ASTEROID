@@ -11,6 +11,8 @@ class Asteroid extends GameObject {
     size = 100;
   }
 
+  
+
   Asteroid(int s, float x, float y) {
     lives = 1;
     loc = new PVector (x, y);
@@ -27,13 +29,12 @@ class Asteroid extends GameObject {
     ellipse(loc.x, loc.y, size, size);
   }
   void act() {
+   
     super.act();
     
     
-    if (mode == GAMEOVER){
-      lives = 0;
-    }
-    
+  
+ 
     if (loc.x < -30) loc.x = width +30;
     if (loc.x >width +30) loc.x = -30;
     if (loc.y <-30) loc.y = height+30;

@@ -40,6 +40,11 @@ class UFO extends GameObject {
 
   void act() {
     super.act();
+    
+      if (mode == INTRO){
+ lives = 0;
+      }
+    
     timer ++;
     twicetime++;
 
@@ -51,9 +56,7 @@ class UFO extends GameObject {
       }
     }
 
-  if (mode == GAMEOVER){
-      lives = 0;
-    }
+ 
     int i = 0;
     while (i < myObjects.size()) {
       GameObject obj = myObjects.get(i);
