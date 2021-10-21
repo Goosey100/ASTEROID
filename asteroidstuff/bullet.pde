@@ -3,16 +3,16 @@ class Bullet extends GameObject {
 
   int timer; 
 
-//  boolean badbullet;
+  //  boolean badbullet;
   Bullet(
-//  boolean badbullet
-  ) {
+    //  boolean badbullet
+    ) {
     super(); 
- //   this.badbullet = badbullet; 
+    //   this.badbullet = badbullet; 
 
-  
- 
-    
+
+
+
     timer = 60;
     lives = 1;
     loc = new PVector(myShip.loc.x, myShip.loc.y);
@@ -41,4 +41,4 @@ class Bullet extends GameObject {
       lives = 0;
     }
   }
-  }
+}

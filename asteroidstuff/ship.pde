@@ -3,14 +3,15 @@ class Ship extends GameObject {
 
   //1. INSTANCE VARIABLES
   PVector direct;
-  int shotTimer, threshold, timegone, timer;
+  float shotTimer, threshold, timegone, timer;
   int teletimer;
   int randomshipx, randomshipy;
   boolean immune;
+
   int counter;
   int pointscreen;
-
-int lifechecker;
+  int telechecker;
+  boolean lifechecker;
   boolean teleport;
 
   //2. CONSTRUCTOR(S)
@@ -30,8 +31,9 @@ int lifechecker;
     teleport = false;
     teletimer = 0;
     tkey= false;
-//    lifechecker=lives;
-    
+
+
+    //    lifechecker=lives;
   }
 
   //3 BEHAVIOUR FUNCTIONS
@@ -39,15 +41,10 @@ int lifechecker;
 
 
   void act() {
-        super.act();
-    
-    if (myShip.lives== 0) {
-mode = GAMEOVER;
-        
-      } 
+    super.act();
 
-    
-             
+
+
 
 
 
@@ -71,9 +68,10 @@ mode = GAMEOVER;
         if (myObj instanceof badbullet) {
           if ( dist(loc.x, loc.y, myObj.loc.x, myObj.loc.y) < size/2 + myObj.size) {   
 
-    myShip.lives--;
-    immune = true;
-        
+            myShip.lives--;
+            myObj.lives--;
+            immune = true;
+
             myObjects.add(new particle(loc.x, loc.y));
             myObjects.add(new particle(loc.x, loc.y));
             myObjects.add(new particle(loc.x, loc.y));
@@ -91,6 +89,7 @@ mode = GAMEOVER;
         i++;
       }
     }
+
 
 
 
@@ -127,48 +126,74 @@ mode = GAMEOVER;
 
       shotTimer = 0;
     }
-  }
+    // TELEPORTATION TIMER THING =====================================================================================
+
+    teletimer++;
+
+    int p=0;
+
+    while (p <myObjects.size() ) {
+      GameObject myObj = myObjects.get(p);
+      if (myObj instanceof Asteroid) {
+
+        do {
+          randomshipx=(int) random (width);
+          randomshipy= (int) random (height);
+        } while ( dist (randomshipx, randomshipy, myShip.loc.x, myShip.loc.y)>=  myObj.size/2+ myShip.size+ 200);// ASTEROID COLLISION CHECK ========
+      }
+      p++;
+    }
+
+
+
+    if (tkey  &&  teletimer >= 800  ) {////// IF T KEY = TRUE AND TIMER COUNT IS READY TO DEPLOY, TELEPORTATION COMMENCE 
+      immune = true;
+      fill(#FF0004);
+      loc = new PVector (randomshipx, randomshipy);
+      teletimer = 0;
+    } else if (teletimer>=0) {
+      tkey = false;
+      teletimer ++ ;
+    } else {
+    }
+
+    if (teletimer >=800) {
+      fill(#00FF68);
+    } else if  (teletimer <= 0) {
+      fill (#FF0022);
+    }
+
+    fill (#FF0022);
+
+    if (teletimer >=800) {
+      fill(#00FF68);
+    } 
+    circle (760, 30, 50);
+//   text( randomshipx, 100, 500);
+
+
+
+    if (myShip.lives <= 0) {
+      mode = GAMEOVER;
+    }
+  }//=================================================
 
   void show() {
 
 
 
-  //  text ("counter" + counter, 50, 200);
-
-
-
-    if (tkey = true &&mode == GAME
-     // && teletimer >= 60
-      ) {
-     // do { 
-        randomshipx=(int)random(800);
-        randomshipy=(int)random(600);
-      //} while  (randomshipx>= dist(loc.x, loc.y, myShip.loc.x, myShip.loc.y) && randomshipy>= dist(loc.x, loc.y, myShip.loc.x, myShip.loc.y));
-    }
-
-
-
-
-
-
-
+    //  text ("counter" + counter, 50, 200);
     //int i = 0;
 
-
-
-
-
-
-
-
-fill(255);
-   text( "LIVES: " + myShip.lives, 80, 50);
+    fill(255);
+   // SCORE SHOWER:=====================================================================================================================
+    text( "LIVES: " + myShip.lives, 80, 50);
     text( "SCORE " + points, 80, 100);
     pushMatrix();
     translate(loc.x, loc.y);
     rotate(direct.heading());
     stroke(255);
-
+// IMMUNE TRUTH===============================================================================================================
     if ( myShip.immune == true) {
       fill (#288BEA);
     }

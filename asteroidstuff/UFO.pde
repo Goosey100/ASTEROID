@@ -33,7 +33,7 @@ class UFO extends GameObject {
   void show() {
     textSize(40);
     stroke (255, 209, 149);
-    fill(#FF080C);
+    fill(#6100E3);
     ellipse (loc.x, loc.y, size, size);
   }
 
@@ -94,7 +94,7 @@ class UFO extends GameObject {
 
 
       if (mode == GAMEOVER) {
-        
+      
         stroke (0);
         fill(0);
       } else if (mode == GAME) {
